@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web hook</title>
+  </head>
+  <body>
+    <h1>Web Hook Example</h1>
+    <div id="sse-data"></div>
+
+    <script>
+      // sse setup
+      const callWebHook = async () => {
+        try {
+          const res = await fetch("/webhook", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: "This is web hook" }),
+          });
+          if (res.status === 200) {
+            console.log("Webhook called successfully");
+          } else {
+            console.error("Webhook call failed", await res.text());
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      callWebHook();
+    </script>
+  </body>
+</html>
