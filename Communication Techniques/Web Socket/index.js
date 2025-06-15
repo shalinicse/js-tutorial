@@ -7,21 +7,29 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-app.use(express.static(__dirname)); // to serve index.html
+// Serve static files (like index.html)
+app.use(express.static(__dirname));
 
+// Route for home
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+
 io.on("connection", (socket) => {
-  console.log("User connected");
+  console.log("Connection Established");
 
   socket.on("Chat Message", (msg) => {
-    console.log("Received:", msg);
-    io.emit("Chat Message", msg);
+    // this is listening to input message
+    console.log("Received Message", msg);
+    io.emit("Chat Message", msg); //this is broadcasting the message received to the device that is connected to server
+  });
+
+  socket.on("Disconnected", () => {
+    console.log("User disconnected");
   });
 });
-
-server.listen(3000, () => {
-  console.log("Server listening on http://localhost:3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
