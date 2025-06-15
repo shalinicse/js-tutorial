@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <title>Long Polling</title> -->
+  </head>
+  <body>
+    <h1>Long Polling Example</h1>
+    <div id="data-container"></div>
+
+    <script>
+      async function getData(lastData) {
+        try {
+          const response = await fetch(`/getData?lastData=${lastData}`);
+          const resJosn = await response.json();
+          document.getElementById("data-container").innerHTML = resJosn.data;
+          //once i get the res , i will make another request to server
+          getData(resJosn.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      //but first time we need to make the request
+      getData();
+    </script>
+  </body>
+</html>
