@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click Hijacking Ex</title>
+    <style>
+      #leggit-iframe {
+        position: absolute;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        opacity: 0.01; /* Makes iframe nearly invisible */
+        z-index: 2;
+      }
+      #fake-button {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        z-index: 3; /* Above iframe visually */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Click Hijacking!</h1>
+    <p>Click the button below to see a simple click hijacking demonstration.</p>
+    <button id="overlay-button">Click me!</button>
+    <iframe id="leggit-iframe" src="http://localhost:3001/iframe-website1" />
+    <script>
+      document
+        .getElementById("overlay-button")
+        .addEventListener("click", () => {
+          alert("button clicked");
+        });
+    </script>
+  </body>
+</html>

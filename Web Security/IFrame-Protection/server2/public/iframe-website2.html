@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Malicious iframe</title>
+  </head>
+  <body>
+    <h1>Malicious iframe</h1>
+    <p>This iframe attempts to steal data from the parent window.</p>
+
+    <script>
+      window.alert("Hi");
+
+      // Malicious JavaScript code in the iframe
+      window.onload = function () {
+        try {
+          const parentWindow = window.parent;
+          const parentDocument = parentWindow.document;
+
+          // Try to read HTML content
+          const parentHTML = parentDocument.documentElement.innerHTML;
+
+          // Try to read cookies
+          const parentCookies = parentDocument.cookie;
+
+          console.log("Parent HTML:", parentHTML);
+          console.log("Parent Cookies:", parentCookies);
+
+          // Show it for demo
+          alert("Parent HTML:\n" + parentHTML.substring(0, 100) + "...");
+          alert("Cookies: " + parentCookies);
+        } catch (error) {
+          alert("Access blocked by browser (Same-Origin Policy)");
+          console.error("Access denied:", error);
+        }
+      };
+    </script>
+  </body>
+</html>
